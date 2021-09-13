@@ -10,6 +10,11 @@ from adafruit_hid.keycode import Keycode
 from adafruit_hid.keyboard import Keyboard
 from adafruit_hid.keyboard_layout_us import KeyboardLayoutUS
 from adafruit_hid.mouse import Mouse
+from adafruit_hid.hid_gamepad import Gamepad
+gamepad = Gamepad(usb_hid.devices)
+
+def range_map(x,in_min,in_max,out_min,out_max):  return int((x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min)
+
 
 # led will switch on the onboard led indicating the pi is powered on. this can be commented out if prefered
 led = digitalio.DigitalInOut(board.GP25)
@@ -20,16 +25,11 @@ KEYBOARD = 0
 CONTROLLER = 1
 
 # choose between KEYBOARD and CONTROLLER. note that Controller is deprecated in the libraries and will not work on most OS's 
-MODE = KEYBOARD
+MODE = CONTROLLER
 
 keyboard = Keyboard(usb_hid.devices)
 mouse = Mouse(usb_hid.devices)
 layout = KeyboardLayoutUS(keyboard)
-
-buttons = {BTN_SELECT : 'select', BTN_LEFT_JOY : 'left joystick button', BTN_RIGHT_JOY : 'right joystick button', BTN_START : 'start', BTN_UP : 'up', BTN_DOWN : 'down', BTN_LEFT : 'left', BTN_RIGHT : 'right'}
-buttons2 = {BTN_L2 : 'L2', BTN_R2 : 'R2', BTN_L1 : 'L1',BTN_R1 : 'R1', BTN_TRIANGLE : 'triangle', BTN_CIRCLE : 'circle',BTN_X : 'X', BTN_SQUARE : 'Square'}
-keyboardCodes1 = {BTN_SELECT : Keycode.SPACEBAR, BTN_LEFT_JOY : Keycode.Q, BTN_RIGHT_JOY : Keycode.E, BTN_START : Keycode.ESCAPE, BTN_UP : Keycode.W, BTN_DOWN : Keycode.S, BTN_LEFT : Keycode.A, BTN_RIGHT : Keycode.D}
-keyboardCodes2 = {BTN_L2 : Keycode.R, BTN_R2 : Keycode.T, BTN_L1 : Keycode.F,BTN_R1 : Keycode.G, BTN_TRIANGLE : Keycode.I, BTN_CIRCLE : Keycode.O,BTN_X : Keycode.K, BTN_SQUARE : Keycode.L}
 
 button_status = [False for _ in range(9)]
 button_status2 = [False for _ in range(9)]
@@ -62,7 +62,7 @@ while (1):
         move[0] =  0 if abs(amouse[0] - prev[0]) < 2 else amouse[0] - 126
         move[1] =  0 if abs(amouse[1] - prev[1]) < 2 else amouse[1] - 126
         # move the mouse to the intended direction
-        mouse.move(x=move[0],y=move[1])
+        #mouse.move(x=move[0],y=move[1])
         prev = amouse
        # print(amouse)
         nextRead += READDELAYMS
@@ -91,14 +91,19 @@ while (1):
  #TODO : finish example for windows
         elif MODE == CONTROLLER:
             for x in buttons:
-                if button_status[button_status[x]] == True:
+                if button_status[x]:
                     gamepad.release_buttons(x + 1)
                 else:
                     gamepad.press_buttons(x + 1)
             for x in buttons2:
-                if button_status[button_status[x]] == True:
+                if button_status2[x]:
                     gamepad.release_buttons(x + 1 + 8)
                 else:
                     gamepad.press_buttons(x + 1 + 8)
-
-
+            
+            x = range_map(amouse[0], 0, 255, -127, 127)
+            y = range_map(amouse[1], 0, 255, -127, 127)
+            x2 = range_map(amouse[2], 0, 255, -127, 127)
+            y2 = range_map(amouse[3], 0, 255, -127, 127)
+            gamepad.move_joysticks(x,y,x2,y2)
+            

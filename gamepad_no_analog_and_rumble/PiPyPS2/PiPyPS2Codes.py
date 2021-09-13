@@ -1,3 +1,6 @@
+from adafruit_hid.keycode import Keycode
+
+
 # Delays */
 CLK_DELAY  		= 4
 BYTE_DELAY 		= 3
@@ -48,16 +51,7 @@ BTN_CIRCLE		= 5
 BTN_X		= 	6
 BTN_SQUARE		= 7
 
-# Byte Numbers of PSdata[] For Button Pressures */
-PRES_RIGHT 		= 10
-PRES_LEFT 	= 	11
-PRES_UP 		= 12
-PRES_DOWN 		= 13
-PRES_TRIANGLE 	= 14
-PRES_CIRCLE 	= 15
-PRES_X		 = 	16
-PRES_SQUARE = 	17
-PRES_L1		 = 	18
-PRES_R1		 = 	19
-PRES_L2		 = 	20
-PRES_R2		 = 	21
+buttons = {BTN_SELECT : 'select', BTN_LEFT_JOY : 'left joystick button', BTN_RIGHT_JOY : 'right joystick button', BTN_START : 'start', BTN_UP : 'up', BTN_DOWN : 'down', BTN_LEFT : 'left', BTN_RIGHT : 'right'}
+buttons2 = {BTN_L2 : 'L2', BTN_R2 : 'R2', BTN_L1 : 'L1',BTN_R1 : 'R1', BTN_TRIANGLE : 'triangle', BTN_CIRCLE : 'circle',BTN_X : 'X', BTN_SQUARE : 'Square'}
+keyboardCodes1 = {BTN_SELECT : Keycode.SPACEBAR, BTN_LEFT_JOY : Keycode.Q, BTN_RIGHT_JOY : Keycode.E, BTN_START : Keycode.X, BTN_UP : Keycode.W, BTN_DOWN : Keycode.S, BTN_LEFT : Keycode.A, BTN_RIGHT : Keycode.D}
+keyboardCodes2 = {BTN_L2 : Keycode.R, BTN_R2 : Keycode.T, BTN_L1 : Keycode.F,BTN_R1 : Keycode.G, BTN_TRIANGLE : Keycode.I, BTN_CIRCLE : Keycode.O,BTN_X : Keycode.K, BTN_SQUARE : Keycode.L}
