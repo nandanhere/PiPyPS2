@@ -2,6 +2,8 @@
 Circuitpython implementation of a PlayStation 2 controller adapter for Raspberry pi/ pi pico <br>
 This project also includes a Circuitpython port of [Bill Porter's PS2X library](https://github.com/madsci1016/Arduino-PS2X) in the gamepad_with_analog_and_rumble version
 
+## Circuit 
+![Circuit wiring image](https://github.com/nandanhere/PiPyPs2/blob/main/wiring.png)
 
 ## What is it
 - This is a python implementation of the interpreters used to read the input given by playstation controllers and use them accordingly as keyboard and mouse inputs. 
@@ -13,8 +15,6 @@ After installing Circuitpython on your Device (Pico in the case of the example)
 
  ## Installation - standalone
  - Copy the PiPyPS2  or PS2X folder into your directory from where you will refer to the PiPS2 / PS2X class
-## Circuit 
-![Circuit wiring image](https://github.com/nandanhere/PiPyPs2/blob/main/wiring.png)
 
 ## How to use (Keyboard mode):
 - Open game of your choice and in controller remapping press the desired ps2 key while remapping. Note that for now the analog joysticks do not work and will only move the mouse pointer
